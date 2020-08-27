@@ -1,10 +1,17 @@
 package parking;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static parking.ParkingStrategy.NO_PARKING_LOT;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 
 public class InOrderParkingStrategyTest {
@@ -53,6 +60,20 @@ public class InOrderParkingStrategyTest {
     public void testPark_givenNoAvailableParkingLot_thenCreateNoSpaceReceipt(){
 
 	    /* Exercise 2: Test park() method. Use Mockito.spy and Mockito.verify to test the situation for no available parking lot */
+      InOrderParkingStrategy inOrderParkingStrategy = spy(new InOrderParkingStrategy());
+      ParkingLot parkingLot = spy(new ParkingLot("ABC",5));
+      List<ParkingLot> parkingLotList = new ArrayList<>();
+      parkingLotList.add(parkingLot);
+      List<Car> carList = new ArrayList<>();
+      for (int count=0;count<6;count++){
+        carList.add(new Car(""+count));
+      }
+      Car car = new Car("domingo");
+      doReturn(carList).when(parkingLot).getParkedCars();
+      Receipt receipt = inOrderParkingStrategy.park(parkingLotList,car);
+
+      verify(parkingLot,times(1)).getParkedCars();
+      verify(inOrderParkingStrategy, times(1)).createNoSpaceReceipt(any());
 
     }
 
