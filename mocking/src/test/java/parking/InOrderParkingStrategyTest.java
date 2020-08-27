@@ -3,6 +3,7 @@ package parking;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static parking.ParkingStrategy.NO_PARKING_LOT;
 
 import org.junit.Test;
 
@@ -33,6 +34,18 @@ public class InOrderParkingStrategyTest {
 
         /* Exercise 1, Write a test case on InOrderParkingStrategy.createNoSpaceReceipt()
          * With using Mockito to mock the input parameter */
+      InOrderParkingStrategy inOrderParkingStrategy = new InOrderParkingStrategy();
+
+//    ParkingLot parkingLot = mock(ParkingLot.class);
+//    when(parkingLot.getName()).thenReturn("ABC");
+//    when(parkingLot.isFull()).thenReturn(true);
+//    List<ParkingLot> parkingLotList = new ArrayList<>();
+//    parkingLotList.add(parkingLot);
+      Car car = mock(Car.class);
+      when(car.getName()).thenReturn("domingo");
+      Receipt receipt = inOrderParkingStrategy.createNoSpaceReceipt(car);
+      assertEquals("domingo", receipt.getCarName());
+      assertEquals(NO_PARKING_LOT, receipt.getParkingLotName());
 
     }
 
